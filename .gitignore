@@ -1,0 +1,6 @@
+config.py
+*.spec
+model/*.gguf
+dist/
+build/
+output/
