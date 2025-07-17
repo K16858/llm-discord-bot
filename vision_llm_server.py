@@ -21,7 +21,7 @@ base_dir = Path(__file__).resolve().parent
 model_path = base_dir / VISION_MODEL_PATH
 mmproj_path = base_dir / MMPROJ_PATH
 
-chat_handler = Gemma3ChatHandler(clip_model_path=mmproj_path)
+chat_handler = Gemma3ChatHandler(clip_model_path=str(mmproj_path))
 llm = Llama(
     model_path=str(model_path),
     chat_handler=chat_handler,
