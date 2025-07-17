@@ -1,5 +1,6 @@
 import discord
 import requests
+import base64
 from config import DISCORD_TOKEN
 
 url = "http://localhost:8000/generate"
@@ -17,16 +18,22 @@ async def on_message(message):
     if message.author.bot:
         return
     
-    text = message.content
+    text = ""
     image = None
     
-    if message.attachments:
-        image = message.attachments[0].url
+    if message.content:
+        text = message.content
     
-    print("Input: "+text)
+    if message.attachments:
+        attachment = message.attachments[0]
+        img_bytes = await attachment.read()
+        b64 = base64.b64encode(img_bytes).decode('utf-8')
+        image_uri = f"data:image/png;base64,{b64}"
+    
+    print("Input: " + text)
     payload = {
         "prompt": text,
-        "image": image
+        "image": image_uri
     }
     
     response = requests.post(url, json=payload)
