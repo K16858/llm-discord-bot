@@ -1,7 +1,7 @@
 from pathlib import Path
-from llama_cpp import Llama
+from llama_cpp import Llama, Gemma3ChatHandler
 from fastapi import FastAPI, Request
-from config import VISION_MODEL_PATH, SYS_PROMPT, MAX_MESSAGES
+from config import VISION_MODEL_PATH, SYS_PROMPT, MAX_MESSAGES, MMPROJ_PATH
 
 def image_to_base64_uri(image: bytes | str):
   import base64
@@ -18,9 +18,12 @@ app = FastAPI()
 
 base_dir = Path(__file__).resolve().parent
 model_path = base_dir / VISION_MODEL_PATH
+mmproj_path = base_dir / MMPROJ_PATH
 
+chat_handler = Gemma3ChatHandler(clip_model_path=mmproj_path)
 llm = Llama(
     model_path=str(model_path),
+    chat_handler=chat_handler,
     n_ctx=1024,
 )
 
