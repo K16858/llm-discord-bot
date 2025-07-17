@@ -34,13 +34,26 @@ messages.append({"role": "system", "content": SYS_PROMPT})
 async def generate_text(request: Request):
     data = await request.json()
     user_input = data.get("prompt")
+    user_input_image = data.get("image")
     
-    messages.append({"role": "user", "content": user_input})
-
+    if (user_input_image):
+      messages.append(
+                {
+                "role": "user",
+                "content": [
+                    {'type': 'image_url', 'image_url': image_to_base64_uri(Path(user_input_image).read_bytes())},
+                    {"type" : "text", "text": user_input}
+                ]
+            }
+        )
+    else:
+      messages.append({"role": "user", "content": user_input})
+    
     # 推論
     output = llm.create_chat_completion(
         messages,
-        stop=["###","</s>","�"]
+        stop=['<end_of_turn>', '<eos>'],
+        max_tokens=200,
     )
     
     print(output)
