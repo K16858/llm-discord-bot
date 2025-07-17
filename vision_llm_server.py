@@ -3,6 +3,17 @@ from llama_cpp import Llama
 from fastapi import FastAPI, Request
 from config import VISION_MODEL_PATH, SYS_PROMPT, MAX_MESSAGES
 
+def image_to_base64_uri(image: bytes | str):
+  import base64
+  import urllib.request as request
+
+  if isinstance(image, bytes):
+    data = base64.b64encode(image).decode('utf-8')
+  else:
+    with request.urlopen(image) as f:
+      data = base64.b64encode(f.read()).decode('utf-8')
+  return f'data:image/png;base64,{data}'
+
 app = FastAPI()
 
 base_dir = Path(__file__).resolve().parent
