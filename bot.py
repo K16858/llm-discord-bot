@@ -16,10 +16,17 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot:
         return
+    
     text = message.content
+    image = None
+    
+    if message.attachments:
+        image = message.attachments[0].url
+    
     print("Input: "+text)
     payload = {
-        "prompt": text
+        "prompt": text,
+        "image": image
     }
     
     response = requests.post(url, json=payload)
