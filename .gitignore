@@ -1,6 +1,8 @@
 config.py
 *.spec
 model/*.gguf
+mmproj/*.gguf
 dist/
 build/
 output/
+__pycache__/
