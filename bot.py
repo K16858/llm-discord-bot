@@ -19,7 +19,7 @@ async def on_message(message):
         return
     
     text = ""
-    image = None
+    image_uri = None
     
     if message.content:
         text = message.content
