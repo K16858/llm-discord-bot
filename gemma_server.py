@@ -1,7 +1,7 @@
 from pathlib import Path
 from llama_cpp import Llama
 from fastapi import FastAPI, Request
-from config import MODEL_PATH, SYS_MSG, SYS_MSG_REPLY
+from config import MODEL_PATH, SYS_PROMPT, SYS_PROMPT_REPLY
 
 # メッセージ履歴の制限
 max_messages = 10
@@ -18,8 +18,8 @@ llm = Llama(
 
 messages = []
 # gemmaはシステムロールなし&ユーザー，アシスタントの繰り返ししか許可しないため
-messages.append({"role": "user", "content": SYS_MSG})
-messages.append({"role": "assistant", "content": SYS_MSG_REPLY})
+messages.append({"role": "user", "content": SYS_PROMPT})
+messages.append({"role": "assistant", "content": SYS_PROMPT_REPLY})
 
 @app.post("/generate")
 async def generate_text(request: Request):

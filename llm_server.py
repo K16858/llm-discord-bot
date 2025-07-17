@@ -1,7 +1,7 @@
 from pathlib import Path
 from llama_cpp import Llama
 from fastapi import FastAPI, Request
-from config import MODEL_PATH, SYS_MSG
+from config import MODEL_PATH, SYS_PROMPT
 
 # メッセージ履歴の制限
 max_messages = 10
@@ -18,7 +18,7 @@ llm = Llama(
 
 messages = []
 # システムロールのないモデル(llm-jp3とか)はuserにする必要がある
-messages.append({"role": "system", "content": SYS_MSG})
+messages.append({"role": "system", "content": SYS_PROMPT})
 
 @app.post("/generate")
 async def generate_text(request: Request):
