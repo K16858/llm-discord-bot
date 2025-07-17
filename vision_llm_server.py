@@ -1,5 +1,6 @@
 from pathlib import Path
-from llama_cpp import Llama, Gemma3ChatHandler
+from llama_cpp import Llama
+from llama_cpp.llama_chat_format import Gemma3ChatHandler
 from fastapi import FastAPI, Request
 from config import VISION_MODEL_PATH, SYS_PROMPT, MAX_MESSAGES, MMPROJ_PATH
 
@@ -38,7 +39,7 @@ async def generate_text(request: Request):
     
     if (user_input_image):
       messages.append(
-                {
+            {
                 "role": "user",
                 "content": [
                     {'type': 'image_url', 'image_url': user_input_image},
