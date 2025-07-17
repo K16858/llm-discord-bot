@@ -41,7 +41,7 @@ async def generate_text(request: Request):
                 {
                 "role": "user",
                 "content": [
-                    {'type': 'image_url', 'image_url': image_to_base64_uri(Path(user_input_image).read_bytes())},
+                    {'type': 'image_url', 'image_url': user_input_image},
                     {"type" : "text", "text": user_input}
                 ]
             }
